@@ -13,7 +13,8 @@ class Lab:
     def __init__(self):
         self.reset(False)
 
-    def reset(self, patched=False):
+    def reset(self, patched=False, difficulty="normal"):
+        self.difficulty = difficulty
         self.patched = patched
         self.token = 'LAB-ONLY-' + secrets.token_hex(8)
         self.session = None
@@ -24,12 +25,15 @@ class Lab:
         self.events = ['Training environment initialized. All funds are fictional.']
 
     def state(self):
-        return dict(patched=self.patched, balance=self.balance, loot=self.loot,
+        return dict(difficulty=self.difficulty, patched=self.patched, balance=self.balance, loot=self.loot,
                     stage=self.stage, events=self.events[-30:], won=self.loot == TOTAL)
 
     def request(self, path, data):
         if path == '/api/reset':
-            self.reset(data.get('patched') is True)
+            difficulty = data.get('difficulty', self.difficulty)
+            if difficulty not in ('normal', 'hard'):
+                return 400, {'error': 'Choose normal or hard.'}
+            self.reset(data.get('patched') is True, difficulty)
             return 200, self.state()
         if path == '/api/artifact':
             if self.patched:
@@ -40,7 +44,7 @@ class Lab:
             self.events.append('Debug bundle accessed: service credential exposed.')
             return 200, {'file': 'devops-diagnostics.json', 'service': 'withdrawal-worker',
                          'token': self.token, 'assigned_role': 'observer',
-                         'note': 'Lab API: POST /api/session accepts token and role.'}
+                         'note': 'Lab API: POST /api/session accepts token and role.' if self.difficulty == 'normal' else 'Diagnostic export.'}
         if path == '/api/session':
             if data.get('token') != self.token:
                 return 401, {'error': 'Invalid lab token. Inspect the debug artifact.'}
@@ -60,7 +64,7 @@ class Lab:
                 return 403, {'error': 'Patched: independent server-side approval required.'}
             # BUG 3: client-controlled approval replaces an independent policy check.
             if data.get('approved') is not True:
-                return 403, {'error': 'Approval missing. Read the vulnerable code.'}
+                return 403, {'error': 'Approval missing. Read the vulnerable code.' if self.difficulty == 'normal' else 'Approval missing.'}
             amount = data.get('amount')
             if type(amount) is not int or not 0 < amount <= self.balance:
                 return 400, {'error': 'Amount must be a positive integer within vault balance.'}
@@ -107,6 +111,8 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == '/api/state':
             with self.lock:
                 return self.send(200, self.lab.state())
+        if self.path == '/source' and self.lab.difficulty == 'hard':
+            return self.send(403, {'error': 'Source viewer disabled in Hard mode.'})
         files = {'/': ('index.html', 'text/html; charset=utf-8'),
                  '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                  '/hq.js': ('hq.js', 'text/javascript; charset=utf-8'),

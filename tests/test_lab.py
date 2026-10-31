@@ -44,6 +44,17 @@ class GameTests(unittest.TestCase):
         self.assertFalse(self.withdraw(session, amount=1)[1]['won'])
         self.assertTrue(self.withdraw(session, amount=TOTAL-1)[1]['won'])
 
+    def test_hard_mode_is_solvable_and_persists(self):
+        old_token = self.lab.token
+        self.assertEqual(self.lab.request('/api/reset', {'difficulty':'hard'})[0], 200)
+        self.assertNotEqual(old_token, self.lab.token)
+        self.assertEqual(self.lab.state()['difficulty'], 'hard')
+        self.assertTrue(self.withdraw(self.login())[1]['won'])
+        self.lab.request('/api/reset', {'patched': True})
+        self.assertEqual(self.lab.difficulty, 'hard')
+        self.assertEqual(self.lab.request('/api/artifact', {})[0], 403)
+        self.assertEqual(self.lab.request('/api/reset', {'difficulty':'invalid'})[0], 400)
+
     def test_reset_invalidates_credentials(self):
         token = self.lab.token
         session = self.login()
@@ -107,6 +118,14 @@ class HTTPTests(unittest.TestCase):
     def test_invalid_json(self):
         for body in ['[]', 'null', '{']:
             self.assertEqual(self.request('/api/reset','POST',body,{'Content-Type':'application/json'})[0],400)
+
+    def test_hard_source_gate(self):
+        try:
+            self.request('/api/reset','POST','{"difficulty":"hard"}',{'Content-Type':'application/json'})
+            self.assertEqual(self.request('/source')[0], 403)
+        finally:
+            self.request('/api/reset','POST','{"difficulty":"normal"}',{'Content-Type':'application/json'})
+        self.assertEqual(self.request('/source')[0], 200)
 
     def test_http_heist(self):
         def post(path, data):

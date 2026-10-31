@@ -52,3 +52,7 @@ MIT licensed. Use only against the supplied local training environment.
 ## Live headquarters
 
 An offline, dependency-free isometric 3D office shows eight employees, desks, monitors, server racks and an incident station. Rotate the view, adjust zoom, pause motion or inspect a team. The scene follows actual server responses: normal operations, credential exposure, privilege anomaly, partial outflow, depleted vault and patched containment. Staff move toward the incident station as the attack advances; screens, status lighting and treasury balances update with the ledger. Reset restores the office. Reduced-motion preferences disable animation. The office and staff reactions are fictional, not a real Binance floor plan or response timeline.
+
+## Difficulty
+
+Use the Normal / Hard selector above the mission toolbar. Normal includes progressive hints and a code viewer. Hard disables both in the UI, blocks the server source route, and removes the debug artifact teaching note. Both use the same vulnerabilities and keep editable request templates. Switching difficulty resets the ledger and invalidates credentials; ordinary resets and patched-mode changes preserve the selected difficulty. This is a self-directed learning challenge, not an anti-cheat system: the open-source repository and frontend assets remain readable.
