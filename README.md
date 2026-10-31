@@ -48,3 +48,7 @@ Tests cover the full simulated heist, independent patched controls, failed attem
 - [WALKTHROUGH.md](WALKTHROUGH.md): full solution and defensive lessons (spoilers).
 
 MIT licensed. Use only against the supplied local training environment.
+
+## Live headquarters
+
+An offline, dependency-free isometric 3D office shows eight employees, desks, monitors, server racks and an incident station. Rotate the view, adjust zoom, pause motion or inspect a team. The scene follows actual server responses: normal operations, credential exposure, privilege anomaly, partial outflow, depleted vault and patched containment. Staff move toward the incident station as the attack advances; screens, status lighting and treasury balances update with the ledger. Reset restores the office. Reduced-motion preferences disable animation. The office and staff reactions are fictional, not a real Binance floor plan or response timeline.

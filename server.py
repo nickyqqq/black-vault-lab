@@ -109,6 +109,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, self.lab.state())
         files = {'/': ('index.html', 'text/html; charset=utf-8'),
                  '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
+                 '/hq.js': ('hq.js', 'text/javascript; charset=utf-8'),
+                 '/hq.css': ('hq.css', 'text/css; charset=utf-8'),
                  '/style.css': ('style.css', 'text/css; charset=utf-8'),
                  '/research': ('RESEARCH.md', 'text/plain; charset=utf-8'),
                  '/source': ('server.py', 'text/plain; charset=utf-8')}
