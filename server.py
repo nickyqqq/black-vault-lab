@@ -116,6 +116,8 @@ class Handler(BaseHTTPRequestHandler):
         files = {'/': ('index.html', 'text/html; charset=utf-8'),
                  '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                  '/hq.js': ('hq.js', 'text/javascript; charset=utf-8'),
+                 '/game.js': ('game.js', 'text/javascript; charset=utf-8'),
+                 '/game.css': ('game.css', 'text/css; charset=utf-8'),
                  '/hq.css': ('hq.css', 'text/css; charset=utf-8'),
                  '/style.css': ('style.css', 'text/css; charset=utf-8'),
                  '/research': ('RESEARCH.md', 'text/plain; charset=utf-8'),

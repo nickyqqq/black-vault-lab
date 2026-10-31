@@ -56,3 +56,7 @@ An offline, dependency-free isometric 3D office shows eight employees, desks, mo
 ## Difficulty
 
 Use the Normal / Hard selector above the mission toolbar. Normal includes progressive hints and a code viewer. Hard disables both in the UI, blocks the server source route, and removes the debug artifact teaching note. Both use the same vulnerabilities and keep editable request templates. Switching difficulty resets the ledger and invalidates credentials; ordinary resets and patched-mode changes preserve the selected difficulty. This is a self-directed learning challenge, not an anti-cheat system: the open-source repository and frontend assets remain readable.
+
+## Game flow
+
+The title screen opens with Play. Choose Normal or Hard, read the three-part mission briefing, and enter headquarters. Starting an operation resets the existing local run. The objective panel tells you what to investigate; Open mission terminal jumps to the active challenge. After a successful stage, a next-mission button guides progression. Menu and Resume preserve the current run while the page stays open. Reloading returns to the title screen. Play again opens difficulty selection.
